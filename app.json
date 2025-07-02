@@ -1,17 +1,23 @@
 {
   "expo": {
-    "name": "purple-app",
-    "slug": "purple-app",
+    "name": "purepetal",
+    "slug": "purplepetalapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 1,
+      "checkAutomatically": "ON_LOAD",
+      "url": "https://u.expo.dev/b39e87aa-dfde-44e0-83f9-2702887c8a0c"
+    },
+
     "ios": {
       "supportsTablet": true
     },
@@ -19,10 +25,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.sujit_7064.purplepetalapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b39e87aa-dfde-44e0-83f9-2702887c8a0c"
+      }
+    },
+    "runtimeVersion": "52.0.0"
   }
 }

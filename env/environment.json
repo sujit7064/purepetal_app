@@ -1,0 +1,20 @@
+{
+  "URL": {
+    "baseUrl": "https://purepetals.mdpcl.com/api/api/"
+  },
+  "endpoints": {
+    "login": "login",
+    "registration": "registration",
+    "bannerproduct": "bannerproducts",
+    "productlist": "productlist",
+    "addtocart": "addtocart",
+    "cartitemlist": "cartitemlist",
+    "cancelcartitem": "cancelcartitem",
+    "alladdreslist": "alladdreslist",
+    "addadress": "addadress",
+    "allorderlist": "allorderlist",
+    "pendingorders": "pendingorders",
+    "profiledetails": "profiledetails",
+    "proceedtobuy": "proceedtobuy"
+  }
+}
