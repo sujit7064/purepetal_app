@@ -39,7 +39,7 @@ export default function ProfileScreen() {
     }
   }, [user]);
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     // Optional: Clear any stored tokens or user info here
 
     // Reset user context
@@ -78,12 +78,12 @@ export default function ProfileScreen() {
           subtitle="View your past orders"
           onPress={() => navigation.navigate("OrderHistory")}
         />
-        <MenuItem
+        {/* <MenuItem
           icon="time-outline"
           title="Pending Orders"
           subtitle="Track your current orders"
           onPress={() => navigation.navigate("PendingOrders")}
-        />
+        /> */}
       </View>
 
       {/* Account Settings */}

@@ -9,6 +9,9 @@ import {
 } from "react-native";
 import { useGetUser } from "../contextApi/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useLayoutEffect } from "react";
+import * as app from "../app.json";
 
 const HomeScreen = () => {
   const { user } = useGetUser();
@@ -85,6 +88,17 @@ const HomeScreen = () => {
     { title: "Home Care", image: require("../assets/images/homecare.jpg") },
   ];
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={styles.headerRightContainer}>
+          <Ionicons name="person-circle-outline" size={22} color="#333" />
+          <Text style={styles.versionText}>V{app.expo.version}</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
+
   return (
     <ScrollView style={styles.container}>
       {/* Hero Section */}
@@ -158,20 +172,20 @@ const HomeScreen = () => {
 
       {/* Shop by Category */}
       <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Shop by Category</Text>
-      <View style={styles.categoryGrid}>
-        {categories.map((cat, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.categoryItem}
-            onPress={() => navigation.navigate("Product")}
-          >
-            <Image source={cat.image} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>{cat.title}</Text>
-          </TouchableOpacity>
-        ))}
+        <Text style={styles.sectionTitle}>Shop by Category</Text>
+        <View style={styles.categoryGrid}>
+          {categories.map((cat, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.categoryItem}
+              onPress={() => navigation.navigate("Product")}
+            >
+              <Image source={cat.image} style={styles.categoryImage} />
+              <Text style={styles.categoryText}>{cat.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
-    </View>
 
       {/* Our Impact Section */}
       <View style={styles.section}>
@@ -204,9 +218,17 @@ const HomeScreen = () => {
         <Text style={styles.footerTitle}>Purepetal</Text>
 
         <View style={styles.footerLinks}>
-          {["Home", "Shop", "About Us", "Contact"].map((link, idx) => (
-            <TouchableOpacity key={idx}>
-              <Text style={styles.footerLink}>{link}</Text>
+          {[
+            { title: "Home", screen: "Home" },
+            { title: "Shop", screen: "Product" },
+            { title: "About Us", screen: "AboutUsScreen" },
+            { title: "Contact", screen: "ContactUsScreen" },
+          ].map((link, idx) => (
+            <TouchableOpacity
+              key={idx}
+              onPress={() => navigation.navigate(link.screen)}
+            >
+              <Text style={styles.footerLink}>{link.title}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -226,8 +248,8 @@ const HomeScreen = () => {
         </View>
 
         <View style={styles.footerContactBox}>
-          <Text style={styles.footerContact}>📧 contact@purepetal.com</Text>
-          <Text style={styles.footerContact}>📞 +91 123 456 7890</Text>
+          <Text style={styles.footerContact}>📧 info.purepetal@gmail.com</Text>
+          <Text style={styles.footerContact}>📞 +91 8984952722</Text>
         </View>
 
         <Text style={styles.footerCopyright}>
@@ -537,7 +559,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  // --- rest of your styles (unchanged) ---
+  headerRightContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  headerRightContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  versionText: {
+    marginLeft: 5,
+    fontSize: 14,
+    color: "#333",
+    fontWeight: "bold",
+  },
 });
 
 export default HomeScreen;

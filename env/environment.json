@@ -15,6 +15,7 @@
     "allorderlist": "allorderlist",
     "pendingorders": "pendingorders",
     "profiledetails": "profiledetails",
-    "proceedtobuy": "proceedtobuy"
+    "proceedtobuy": "proceedtobuy",
+    "return": "return"
   }
 }

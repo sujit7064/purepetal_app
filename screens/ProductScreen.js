@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
-import { productlist } from '../env/action';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import { productlist } from "../env/action";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductScreen = () => {
   const [products, setProducts] = useState([]);
@@ -18,7 +27,12 @@ const ProductScreen = () => {
   }, []);
 
   const handleProductClick = (product) => {
-    navigation.navigate('ProductDetailScreen', { product });
+    navigation.navigate("ProductDetailScreen", { product });
+  };
+  const getDiscountPercent = (cutPrice, price) => {
+    if (!cutPrice || !price) return null;
+    const discount = ((cutPrice - price) / cutPrice) * 100;
+    return Math.round(discount);
   };
 
   if (loading) {
@@ -41,8 +55,16 @@ const ProductScreen = () => {
               onPress={() => handleProductClick(product)}
             >
               <Image source={{ uri: product.image }} style={styles.image} />
-              <Text style={styles.name} numberOfLines={2}>{product.product_name}</Text>
-              <Text style={styles.price}>₹{product.price}</Text>
+              <Text style={styles.name} numberOfLines={2}>
+                {product.product_name}
+              </Text>
+              <View style={styles.priceRow}>
+                <Text style={styles.originalPrice}>₹{product.cut_price}</Text>
+                <Text style={styles.finalPrice}>₹{product.price}</Text>
+              </View>
+              <Text style={styles.discountText}>
+                {getDiscountPercent(product.cut_price, product.price)}% OFF
+              </Text>
               <Text style={styles.rating}>⭐ 4.9 (640)</Text>
             </TouchableOpacity>
           ))
@@ -54,73 +76,98 @@ const ProductScreen = () => {
   );
 };
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 const cardWidth = (screenWidth - 60) / 2;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fefefe',
+    backgroundColor: "#fefefe",
     padding: 16,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     fontSize: 24,
-    fontWeight: '700',
+    fontWeight: "700",
     marginBottom: 16,
-    color: '#2d3436',
+    color: "#2d3436",
   },
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   card: {
     width: cardWidth,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 16,
-    overflow: 'hidden',
+    overflow: "hidden",
     elevation: 3,
-    shadowColor: '#ccc',
+    shadowColor: "#ccc",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 160,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   name: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#2d3436',
+    fontWeight: "600",
+    color: "#2d3436",
     marginTop: 8,
     marginHorizontal: 10,
   },
   price: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#27ae60',
+    fontWeight: "bold",
+    color: "#27ae60",
     marginTop: 4,
     marginHorizontal: 10,
   },
   rating: {
     fontSize: 13,
-    color: '#777',
+    color: "#777",
     marginVertical: 8,
     marginHorizontal: 10,
   },
   emptyText: {
     fontSize: 16,
-    color: '#888',
-    textAlign: 'center',
+    color: "#888",
+    textAlign: "center",
     marginTop: 30,
+  },
+  priceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+  },
+
+  originalPrice: {
+    textDecorationLine: "line-through",
+    color: "gray",
+    marginRight: 8,
+    fontSize: 14,
+  },
+
+  finalPrice: {
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  discountText: {
+    color: "#e74c3c",
+    fontWeight: "bold",
+    fontSize: 14,
+    marginHorizontal: 10,
+    marginBottom: 8,
   },
 });
 
