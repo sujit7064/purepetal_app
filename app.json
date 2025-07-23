@@ -24,8 +24,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "targetSdkVersion": 35
+        "backgroundColor": "#ffffff"
       },
       "package": "com.sujit_7064.purplepetalapp"
     },
