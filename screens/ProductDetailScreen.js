@@ -55,6 +55,13 @@ const ProductDetailScreen = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  const formattedDetails = product.details
+    ? product.details
+        .split("\n") // split by newlines
+        .map((line) => line.trim())
+        .filter((line) => line.includes(":"))
+    : [];
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.card}>
@@ -87,6 +94,26 @@ const ProductDetailScreen = () => {
           {product.description ||
             "Experience the purity of hand-crafted, eco-friendly tribal products delivered to your doorstep."}
         </Text>
+
+        {formattedDetails.length > 0 && (
+          <View style={{ marginTop: 10, width: "100%" }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 8 }}>
+              Product Details:
+            </Text>
+            {formattedDetails.map((line, index) => {
+              const [label, ...rest] = line.split(":");
+              const value = rest.join(":").trim();
+              return (
+                <View key={index} style={{ marginBottom: 6 }}>
+                  <Text style={{ fontSize: 14, color: "#444" }}>
+                    <Text style={{ fontWeight: "600" }}>{label.trim()}:</Text>{" "}
+                    {value}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+        )}
 
         <View style={styles.quantityContainer}>
           <TouchableOpacity
