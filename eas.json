@@ -15,11 +15,17 @@
       "autoIncrement": true
     },
     "androidlocal": {
-      "channel": "local",
+      "channel": "uat",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "androidaab": {
+      "channel": "uat",
+      "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
-      },
-      "distribution": "internal"
+      }
     }
   },
   "submit": {
