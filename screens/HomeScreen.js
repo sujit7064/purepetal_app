@@ -564,11 +564,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
   },
-  headerRightContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginRight: 10,
-  },
   versionText: {
     marginLeft: 5,
     fontSize: 14,

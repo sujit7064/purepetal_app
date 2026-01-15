@@ -25,9 +25,9 @@ const ContactUsScreen = () => (
       </Text>
       <Text
         style={styles.link}
-        onPress={() => Linking.openURL("mailto:purepetalsimilipal@gmail.com")}
+        onPress={() => Linking.openURL("mailto:info.purepetal@gmail.com")}
       >
-        purepetalsimilipal@gmail.com
+        info.purepetal@gmail.com
       </Text>
     </View>
 
@@ -35,14 +35,23 @@ const ContactUsScreen = () => (
       <Text style={styles.cardTitle}>
         <Icon name="call-outline" size={20} color="#2E3A59" /> Phone
       </Text>
-      <Text style={styles.paragraph}>+91 99389 54453</Text>
+      <Text style={styles.paragraph}>+918984952722</Text>
     </View>
 
     <View style={styles.card}>
       <Text style={styles.cardTitle}>
         <Icon name="location-outline" size={20} color="#2E3A59" /> Location
       </Text>
-      <Text style={styles.paragraph}>Similipal, Mayurbhanj, Odisha, India</Text>
+      <Text style={styles.paragraph}>
+        At- Brundagadi, {"\n"}
+        Po- Athapada, {"\n"}
+        Via: B.C Pur, {"\n"}
+        Block: Udala, {"\n"}
+        Dist: Mayurbhanj, {"\n"}
+        State: ODISHA, {"\n"}
+        Pincode:757087, {"\n"}
+        India
+      </Text>
     </View>
 
     <TouchableOpacity
