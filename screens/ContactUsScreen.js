@@ -9,8 +9,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 const ContactUsScreen = () => (
+   <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
   <ScrollView contentContainerStyle={styles.container}>
     <Text style={styles.title}>Contact Us</Text>
 
@@ -61,6 +62,7 @@ const ContactUsScreen = () => (
       <Text style={styles.contactText}>Visit Website</Text>
     </TouchableOpacity>
   </ScrollView>
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
