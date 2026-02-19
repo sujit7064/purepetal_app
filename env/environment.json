@@ -5,7 +5,7 @@
   "endpoints": {
     "login": "login",
     "registration": "registration",
-    "bannerproduct": "bannerproducts",
+    "bannerproduct": "bannerproduct",
     "productlist": "productlist",
     "addtocart": "addtocart",
     "cartitemlist": "cartitemlist",
@@ -16,6 +16,10 @@
     "pendingorders": "pendingorders",
     "profiledetails": "profiledetails",
     "proceedtobuy": "proceedtobuy",
-    "return": "return"
+    "return": "return",
+    "Categorylist": "categorylist",
+    "Productbycategory": "productbycategory",
+    "Productdetails": "productdetails",
+    "Similarproducts": "similarproducts"
   }
 }

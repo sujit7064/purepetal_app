@@ -63,3 +63,21 @@ export const returnOrder = (data, callback) => {
   const url = URL.baseUrl + endpoints.return;
   axiospostjson(url, data, "", callback);
 };
+
+export const categorylist = (data, callback) => {
+  const url = URL.baseUrl + endpoints.Categorylist;
+  axiospostjson(url, data, "", callback);
+} ;
+
+export const productbycategory = (data, callback) => {
+  const url = URL.baseUrl + endpoints.Productbycategory;
+  axiospostjson(url, data, "", callback);
+} ;         
+export const productdetails = (data, callback) => {
+  const url = URL.baseUrl + endpoints.Productdetails;
+  axiospostjson(url, data, "", callback);
+} ;         
+export const similarproducts = (data, callback) => {
+  const url = URL.baseUrl + endpoints.Similarproducts;
+  axiospostjson(url, data, "", callback);
+} ;

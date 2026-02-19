@@ -29,6 +29,7 @@ function MainApp() {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Home") {

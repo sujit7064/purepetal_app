@@ -1,11 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import { alladdresslist } from '../env/action';
-import { useGetUser } from '../contextApi/UserContext';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { alladdresslist } from "../env/action";
+import { useGetUser } from "../contextApi/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 const AllAddressesScreen = () => {
+  const navigation = useNavigation();
   const { user } = useGetUser();
-  const user_id = user.user_id;
+  const user_id = user?.user_id;
 
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +28,7 @@ const AllAddressesScreen = () => {
       if (res?.status === 1) {
         setAddresses(res.data.address);
       } else {
-        Alert.alert('Error', 'Failed to load addresses');
+        Alert.alert("Error", "Failed to load addresses");
       }
       setLoading(false);
     });
@@ -27,100 +40,148 @@ const AllAddressesScreen = () => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color="#007bff" />
-        <Text style={styles.loadingText}>Loading your addresses...</Text>
-      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color="#007bff" />
+          <Text style={styles.loadingText}>Loading your addresses...</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={styles.container}>
-      {/* Header Title */}
-      <Text style={styles.pageTitle}>📍 My Addresses</Text>
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="#111" />
+        </TouchableOpacity>
+
+        <View style={styles.headerCenter}>
+          <Ionicons name="location" size={22} color="#007bff" />
+          <Text style={styles.headerTitle}>My Addresses</Text>
+        </View>
+
+        <View style={{ width: 24 }} />
+      </View>
+
+      {/* Address List */}
       <FlatList
         data={addresses}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
-          <View style={[styles.card, { backgroundColor: cardColors[index % cardColors.length] }]}>
-            <Text style={styles.label}><Text style={styles.field}>Address:</Text> {item.address}</Text>
-            <Text style={styles.label}><Text style={styles.field}>City:</Text> {item.city}</Text>
-            <Text style={styles.label}><Text style={styles.field}>District:</Text> {item.dist}</Text>
-            <Text style={styles.label}><Text style={styles.field}>State:</Text> {item.state}</Text>
-            <Text style={styles.label}><Text style={styles.field}>Pincode:</Text> {item.pincode}</Text>
+          <View
+            style={[
+              styles.card,
+              { backgroundColor: cardColors[index % cardColors.length] },
+            ]}
+          >
+            <Text style={styles.label}>
+              <Text style={styles.field}>Address:</Text> {item.address}
+            </Text>
+            <Text style={styles.label}>
+              <Text style={styles.field}>City:</Text> {item.city}
+            </Text>
+            <Text style={styles.label}>
+              <Text style={styles.field}>District:</Text> {item.dist}
+            </Text>
+            <Text style={styles.label}>
+              <Text style={styles.field}>State:</Text> {item.state}
+            </Text>
+            <Text style={styles.label}>
+              <Text style={styles.field}>Pincode:</Text> {item.pincode}
+            </Text>
           </View>
         )}
         ListEmptyComponent={
-          <Text style={styles.noData}>No addresses found. Try adding some!</Text>
+          <Text style={styles.noData}>
+            No addresses found. Try adding some!
+          </Text>
         }
-        contentContainerStyle={{ paddingBottom: 50 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const cardColors = [
-  '#f2f7ff',  // soft light blue
-  '#e6f2ff',
-  '#f0f8ff',
-  '#f7fbff',
-  '#eef6fb',
-  '#f5faff',
+  "#f2f7ff",
+  "#e6f2ff",
+  "#f0f8ff",
+  "#f7fbff",
+  "#eef6fb",
+  "#f5faff",
 ];
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: "#fff",
+  },
+
+  // Header
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: 20,
-    backgroundColor: '#f9fcff', // soft clean background
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+    backgroundColor: "#fff",
   },
-  pageTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#2c3e50', // dark blue/blackish tone
+  headerCenter: {
+    flexDirection: "row",
+    alignItems: "center",
   },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 6,
+    color: "#111",
+  },
+
+  // Cards
   card: {
-    padding: 20,
-    borderRadius: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 4,
-    marginHorizontal: 8,
-    backgroundColor: '#f0f0f0', // fallback background (overridden by cardColors)
+    padding: 18,
+    borderRadius: 14,
+    marginBottom: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   label: {
-    fontSize: 16,
-    marginBottom: 6,
-    color: '#34495e',
+    fontSize: 15,
+    marginBottom: 5,
+    color: "#34495e",
   },
   field: {
-    fontWeight: 'bold',
-    color: '#007bff',
+    fontWeight: "bold",
+    color: "#007bff",
   },
+
+  // Loading
   center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f9fcff',
+    justifyContent: "center",
+    alignItems: "center",
   },
   loadingText: {
     marginTop: 8,
-    fontSize: 16,
-    color: '#555',
+    fontSize: 15,
+    color: "#555",
   },
+
   noData: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
     marginTop: 20,
-    color: '#999',
+    color: "#999",
   },
 });
 

@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useGetUser } from "../contextApi/UserContext";
 import { profiledetails } from "../env/action";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MenuItem = ({ icon, title, subtitle, onPress }) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress}>
@@ -40,102 +42,121 @@ export default function ProfileScreen() {
   }, [user]);
 
   const handleLogout = async () => {
-    // Optional: Clear any stored tokens or user info here
-
-    // Reset user context
-    await AsyncStorage.clear();
-    setUser(null);
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Auth" }],
-    });
+    Alert.alert(
+      "Logout",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              // Clear AsyncStorage
+              await AsyncStorage.clear();
+              
+              // Reset user context - this will automatically redirect to Auth screen
+              // because AppNavigator will render Auth screen when user is null
+              setUser(null);
+            } catch (error) {
+              console.error("Logout error:", error);
+              Alert.alert("Error", "Failed to logout. Please try again.");
+            }
+          },
+        },
+      ]
+    );
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>Profile</Text>
+    <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+      <ScrollView style={styles.container}>
+        <Text style={styles.header}>Profile</Text>
 
-      {/* Profile Header */}
-      <View style={styles.profileHeader}>
-        <Image
-          source={{ uri: "https://picsum.photos/200" }}
-          style={styles.avatar}
-        />
-        <View style={styles.profileInfo}>
-          <Text style={styles.name}>{profile?.name}</Text>
-          <Text style={styles.number}>{profile?.phone_number}</Text>
-          <Text style={styles.email}>{profile?.email}</Text>
+        {/* Profile Header */}
+        <View style={styles.profileHeader}>
+          <Image
+            source={{ uri: "https://picsum.photos/200" }}
+            style={styles.avatar}
+          />
+          <View style={styles.profileInfo}>
+            <Text style={styles.name}>{profile?.name || "User"}</Text>
+            <Text style={styles.number}>{profile?.phone_number || ""}</Text>
+            <Text style={styles.email}>{profile?.email || ""}</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Orders Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>My Orders</Text>
-        <MenuItem
-          icon="receipt-outline"
-          title="Order History"
-          subtitle="View your past orders"
-          onPress={() => navigation.navigate("OrderHistory")}
-        />
-        {/* <MenuItem
-          icon="time-outline"
-          title="Pending Orders"
-          subtitle="Track your current orders"
-          onPress={() => navigation.navigate("PendingOrders")}
-        /> */}
-      </View>
+        {/* Orders Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>My Orders</Text>
+          <MenuItem
+            icon="receipt-outline"
+            title="Order History"
+            subtitle="View your past orders"
+            onPress={() => navigation.navigate("OrderHistory")}
+          />
+          {/* <MenuItem
+            icon="time-outline"
+            title="Pending Orders"
+            subtitle="Track your current orders"
+            onPress={() => navigation.navigate("PendingOrders")}
+          /> */}
+        </View>
 
-      {/* Account Settings */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Account Settings</Text>
-        {/* <MenuItem
-          icon="person-outline"
-          title="Edit Profile"
-          onPress={() => console.log('Edit profile pressed')}
-        /> */}
-        <MenuItem
-          icon="location-outline"
-          title="Shipping Addresses"
-          onPress={() => navigation.navigate("AllAddressesScreen")}
-        />
-        <MenuItem
-          icon="information-circle-outline"
-          title="About Us"
-          onPress={() => navigation.navigate("AboutUsScreen")}
-        />
-        <MenuItem
-          icon="shield-checkmark-outline"
-          title="Privacy Policy"
-          onPress={() => navigation.navigate("PrivacyPolicyScreen")}
-        />
-        <MenuItem
-          icon="call-outline"
-          title="Contact Us"
-          onPress={() => navigation.navigate("ContactUsScreen")}
-        />
-      </View>
+        {/* Account Settings */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account Settings</Text>
+          {/* <MenuItem
+            icon="person-outline"
+            title="Edit Profile"
+            onPress={() => console.log('Edit profile pressed')}
+          /> */}
+          <MenuItem
+            icon="location-outline"
+            title="Shipping Addresses"
+            onPress={() => navigation.navigate("AllAddressesScreen")}
+          />
+          <MenuItem
+            icon="information-circle-outline"
+            title="About Us"
+            onPress={() => navigation.navigate("AboutUsScreen")}
+          />
+          <MenuItem
+            icon="shield-checkmark-outline"
+            title="Privacy Policy"
+            onPress={() => navigation.navigate("PrivacyPolicyScreen")}
+          />
+          <MenuItem
+            icon="call-outline"
+            title="Contact Us"
+            onPress={() => navigation.navigate("ContactUsScreen")}
+          />
+        </View>
 
-      {/* Preferences
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Preferences</Text>
-        <MenuItem
-          icon="notifications-outline"
-          title="Notifications"9
-          onPress={() => console.log('Notifications pressed')}
-        />
-        <MenuItem
-          icon="lock-closed-outline"
-          title="Privacy Settings"
-          onPress={() => console.log('Privacy pressed')}
-        />
-      </View> */}
+        {/* Preferences
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Preferences</Text>
+          <MenuItem
+            icon="notifications-outline"
+            title="Notifications"9
+            onPress={() => console.log('Notifications pressed')}
+          />
+          <MenuItem
+            icon="lock-closed-outline"
+            title="Privacy Settings"
+            onPress={() => console.log('Privacy pressed')}
+          />
+        </View> */}
 
-      {/* Logout Button */}
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Logout</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        {/* Logout Button */}
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -165,15 +186,21 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     marginLeft: 20,
+    flex: 1,
   },
   name: {
     fontSize: 20,
     fontWeight: "bold",
   },
-  email: {
+  number: {
     fontSize: 16,
     color: "#666",
     marginTop: 4,
+  },
+  email: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 2,
   },
   section: {
     marginTop: 20,
@@ -216,5 +243,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
   },
 });

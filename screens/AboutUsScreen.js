@@ -1,10 +1,11 @@
 import React from "react";
 import { ScrollView, Text, StyleSheet, Image, View } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 const AboutUsScreen = () => {
   return (
     <View style={styles.pageContainer}>
       {/* Root View with background color */}
+       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView contentContainerStyle={styles.container}>
         {/* Title Section */}
         <Text style={styles.title}>About Us</Text>
@@ -44,6 +45,7 @@ const AboutUsScreen = () => {
           </Text>
         </View>
       </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
