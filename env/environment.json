@@ -20,6 +20,10 @@
     "Categorylist": "categorylist",
     "Productbycategory": "productbycategory",
     "Productdetails": "productdetails",
-    "Similarproducts": "similarproducts"
+    "Similarproducts": "similarproducts",
+    "SendRegistrationOtp":"send-registration-otp",
+    "ForgotPasswordOtp":"forgot-password-otp",
+    "ResetPassword":"reset-password",
+    "VerifyRegistrationOtp":"verify-registration-otp"
   }
 }
