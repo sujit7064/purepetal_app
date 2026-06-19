@@ -81,3 +81,25 @@ export const similarproducts = (data, callback) => {
   const url = URL.baseUrl + endpoints.Similarproducts;
   axiospostjson(url, data, "", callback);
 } ;
+
+export const sendRegistrationOtp = (data, callback) => {
+  const url = URL.baseUrl + endpoints.SendRegistrationOtp;
+  axiospostjson(url, data, "", callback);
+} ;
+
+export const sendForgotPasswordOtp = (data, callback) => {
+  const url = URL.baseUrl + endpoints.ForgotPasswordOtp;
+  axiospostjson(url, data, "", callback);
+} ;
+
+export const resetPassword = (data, callback) => {
+  const url = URL.baseUrl + endpoints.ResetPassword;
+  axiospostjson(url, data, "", callback);
+} ;
+
+export const verifyRegistrationOtp = (data, callback) => {
+  const url = URL.baseUrl + endpoints.VerifyRegistrationOtp;
+  axiospostjson(url, data, "", callback);
+} ;
+
+

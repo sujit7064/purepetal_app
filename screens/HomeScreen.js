@@ -15,8 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { categorylist, bannerproduct, productlist } from "../env/action";
 import { SafeAreaView } from "react-native-safe-area-context";
 import banner1 from "../assets/images/dishbanner.jpg";
-import banner2 from "../assets/images/dishbanner.jpg";
-import banner3 from "../assets/images/dishbanner.jpg";
+import banner2 from "../assets/images/banner2.png";
+import banner3 from "../assets/images/banner.png";
 
 const { width } = Dimensions.get("window");
 
@@ -306,9 +306,7 @@ const HomeScreen = () => {
                       source={{ uri: item.image || FALLBACK_IMAGE }}
                       style={styles.featuredImage}
                     />
-                    <View style={styles.wishlistBtn}>
-                      <Ionicons name="heart-outline" size={18} color="#666" />
-                    </View>
+                   
                   </View>
                   <View style={styles.productInfo}>
                     <Text style={styles.productName} numberOfLines={2}>

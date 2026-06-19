@@ -114,10 +114,10 @@ export default function ProductDetailsScreen({ route, navigation }) {
   if (!product) return null;
 
   // Mock images array (replace with actual product images if available)
-  const productImages = [
-    product.image,
-    product.image, // Add more images if available from your API
-  ];
+const productImages =
+  product?.multiple_images && product.multiple_images.length > 0
+    ? product.multiple_images
+    : [product.image];
 
   return (
     <SafeAreaView style={styles.container}>
